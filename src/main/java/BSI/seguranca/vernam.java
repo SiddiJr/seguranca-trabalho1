@@ -43,16 +43,33 @@ public class vernam {
 
         ArrayList<String> cipheredStringToBinary = toBinary(cipheredString.toString());
         ArrayList<String> openStringToBinary = toBinary(openString.toString());
-
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < cipheredStringToBinary.size(); i++) {
+            if(cipheredStringToBinary.get(i).length() < 7) {
+                cipheredStringToBinary.set(i, "0" + cipheredStringToBinary.get(i));
+            }
+
+            if (openStringToBinary.get(i).length() < 7) {
+                openStringToBinary.set(i, "0" + openStringToBinary.get(i));
+            }
+
             for (int j = 0; j < cipheredStringToBinary.getFirst().length(); j++) {
                 result.append(cipheredStringToBinary.get(i).charAt(j) ^ openStringToBinary.get(i).charAt(j));
             }
             result.append(" ");
         }
 
+        StringBuilder finalString = new StringBuilder();
+
+        String[] arrayBinary = result.toString().split(" ");
+
+        for(String data : arrayBinary) {
+            int value = Integer.parseInt(data);
+            finalString.append((char)(value));
+        }
+
+        System.out.println(finalString);
         saveToFile(result.toString(), "cifrado.txt");
     }
 
